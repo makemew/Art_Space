@@ -111,11 +111,8 @@ fun Painting(
     val intrinsicSize = painter.intrinsicSize
     Box(
         modifier = modifier
-            .fillMaxWidth(
-                if (isTablet() && isScreenPortrait()) 0.7f
-                else if (isScreenPortrait()) 1f else 0.5f
-            )
-            .height(if (isTablet() && isScreenPortrait()) 640.dp else 528.dp),
+            .fillMaxWidth(getContentWidth())
+            .height(if (isTablet() && isScreenPortrait()) 624.dp else 528.dp),
         contentAlignment = Alignment.Center
     ) {
         Image(
@@ -130,7 +127,6 @@ fun Painting(
     }
 }
 
-
 @Composable
 fun PaintingDescription(
     title: Int,
@@ -140,10 +136,7 @@ fun PaintingDescription(
 ) {
     Column(
         modifier = modifier
-            .fillMaxWidth(
-                if (isTablet() && isScreenPortrait()) 0.7f
-            else if (isScreenPortrait()) 1f else 0.5f
-            )
+            .fillMaxWidth(getContentWidth())
             .background(color = MaterialTheme.colorScheme.primaryContainer)
             .padding(16.dp)
     ) {
@@ -179,6 +172,12 @@ fun isScreenPortrait(): Boolean {
 fun isTablet(): Boolean {
     val configuration = LocalConfiguration.current
     return configuration.smallestScreenWidthDp >= 600}
+
+@Composable
+fun getContentWidth(): Float {
+    return if (isTablet() && isScreenPortrait()) 0.7f
+    else if (isScreenPortrait()) 1f else 0.5f
+}
 
 @Preview(showBackground = true)
 @Composable
