@@ -38,6 +38,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.artspace.data.artworksList
 import com.example.compose.ArtSpaceTheme
 
 class MainActivity : ComponentActivity() {
@@ -65,6 +66,7 @@ fun ArtSpaceLayout() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        val artworks = artworksList
         var step by remember { mutableIntStateOf(1) }
 
         when (step) {
@@ -74,8 +76,8 @@ fun ArtSpaceLayout() {
                     contentDescription = R.string.content_description_girl_with_earring,
                 )
                 PaintingDescription(
-                    artistName = R.string.artist_name_girl_with_earring,
-                    paintingName = R.string.painting_name_girl_with_earring,
+                    artistName = R.string.artist_girl_with_earring,
+                    paintingName = R.string.title_girl_with_earring,
                     date = R.string.date_girl_with_earring,
                 )
             }
@@ -85,9 +87,20 @@ fun ArtSpaceLayout() {
                     contentDescription = R.string.content_description_the_son_of_man
                 )
                 PaintingDescription(
-                    paintingName = R.string.painting_name_the_son_of_man,
-                    artistName = R.string.artist_name_the_son_of_man,
+                    paintingName = R.string.title_the_son_of_man,
+                    artistName = R.string.artist_the_son_of_man,
                     date = R.string.date_the_son_of_man
+                )
+            }
+            3 -> {
+                Painting(
+                    painterResource = R.drawable.woman_with_a_parasol,
+                    contentDescription = R.string.content_description_woman_with_a_parasol
+                )
+                PaintingDescription(
+                    paintingName = R.string.title_woman_with_a_parasol,
+                    artistName = R.string.artist_woman_with_a_parasol,
+                    date = R.string.date_woman_with_a_parasol
                 )
             }
         }
@@ -99,7 +112,8 @@ fun ArtSpaceLayout() {
         ) {
             Button(
                 onClick = {
-                    step = if (step == 1) 2 else 1                }
+
+                }
             ) {
                 Text("Previous")
             }

@@ -1,13 +1,19 @@
 <resources>
     <string name="app_name">Art Space</string>
 
-    <string name="painting_name_girl_with_earring">Girl with a Pearl Earring</string>
-    <string name="content_description_girl_with_earring">A view of Girl with a Pearl Earring painting</string>
+    <string name="title_girl_with_earring">Girl with a Pearl Earring</string>
+    <string name="content_description_girl_with_earring">A view of the Girl with a Pearl Earring painting</string>
     <string name="date_girl_with_earring">1665</string>
-    <string name="artist_name_girl_with_earring">Johannes Vermeer</string>
+    <string name="artist_girl_with_earring">Johannes Vermeer</string>
 
-    <string name="painting_name_the_son_of_man">The Son of Man</string>
+    <string name="title_the_son_of_man">The Son of Man</string>
     <string name="content_description_the_son_of_man">A view of the Son of Man painting</string>
     <string name="date_the_son_of_man">1964</string>
-    <string name="artist_name_the_son_of_man">René Magritte</string>
+    <string name="artist_the_son_of_man">René Magritte</string>
+
+    <string name="title_woman_with_a_parasol">Woman with a Parasol</string>
+    <string name="content_description_woman_with_a_parasol">A view of the Woman with a Parasol painting</string>
+    <string name="date_woman_with_a_parasol">1875</string>
+    <string name="artist_woman_with_a_parasol">Claude Monet</string>
+
 </resources>
