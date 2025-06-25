@@ -66,44 +66,17 @@ fun ArtSpaceLayout() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        val artworks = artworksList
-        var step by remember { mutableIntStateOf(1) }
+        var step by remember { mutableIntStateOf(0) }
 
-        when (step) {
-            1 -> {
-                Painting(
-                    painterResource = R.drawable.girl_with_a_pearl_earring  ,
-                    contentDescription = R.string.content_description_girl_with_earring,
-                )
-                PaintingDescription(
-                    artistName = R.string.artist_girl_with_earring,
-                    paintingName = R.string.title_girl_with_earring,
-                    date = R.string.date_girl_with_earring,
-                )
-            }
-            2 -> {
-                Painting(
-                    painterResource = R.drawable.the_son_of_man,
-                    contentDescription = R.string.content_description_the_son_of_man
-                )
-                PaintingDescription(
-                    paintingName = R.string.title_the_son_of_man,
-                    artistName = R.string.artist_the_son_of_man,
-                    date = R.string.date_the_son_of_man
-                )
-            }
-            3 -> {
-                Painting(
-                    painterResource = R.drawable.woman_with_a_parasol,
-                    contentDescription = R.string.content_description_woman_with_a_parasol
-                )
-                PaintingDescription(
-                    paintingName = R.string.title_woman_with_a_parasol,
-                    artistName = R.string.artist_woman_with_a_parasol,
-                    date = R.string.date_woman_with_a_parasol
-                )
-            }
-        }
+        Painting(
+            imageRes = artworksList[step].imageRes,
+            contentDescription = artworksList[step].contentDescriptionRes,
+        )
+        PaintingDescription(
+            artist = artworksList[step].artistRes,
+            title = artworksList[step].titleRes,
+            date = artworksList[step].dateRes,
+        )
 
         Spacer(Modifier.height(16.dp))
         Row(
@@ -112,14 +85,15 @@ fun ArtSpaceLayout() {
         ) {
             Button(
                 onClick = {
-
+                    if (step == 0) step = artworksList.size-1 else step-=1
                 }
             ) {
                 Text("Previous")
             }
             Button(
                 onClick = {
-                    step = if (step == 1) 2 else 1                }
+                    if (step == artworksList.size-1) step = 0 else step+=1
+                }
             ) {
                 Text("Next")
             }
@@ -129,11 +103,11 @@ fun ArtSpaceLayout() {
 
 @Composable
 fun Painting(
-    painterResource: Int,
+    imageRes: Int,
     contentDescription: Int,
     modifier: Modifier = Modifier
 ) {
-    val painter = painterResource(painterResource)
+    val painter = painterResource(imageRes)
     val intrinsicSize = painter.intrinsicSize
     Box(
         modifier = modifier
@@ -155,8 +129,8 @@ fun Painting(
 
 @Composable
 fun PaintingDescription(
-    paintingName: Int,
-    artistName: Int,
+    title: Int,
+    artist: Int,
     date: Int,
     modifier: Modifier = Modifier
 ) {
@@ -167,13 +141,13 @@ fun PaintingDescription(
             .padding(16.dp)
     ) {
         Text(
-            text = stringResource(paintingName),
+            text = stringResource(title),
             style = MaterialTheme.typography.titleLarge,
             color = Color.Black
         )
         Row {
             Text(
-                text = stringResource(artistName),
+                text = stringResource(artist),
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black
