@@ -1,5 +1,6 @@
 package com.example.artspace
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,7 +17,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -27,12 +27,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -61,12 +62,11 @@ fun ArtSpaceLayout() {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-            .verticalScroll(rememberScrollState())
-            .safeDrawingPadding(),
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        var step by remember { mutableIntStateOf(0) }
+        var step by rememberSaveable { mutableIntStateOf(0) }
 
         Painting(
             imageRes = artworksList[step].imageRes,
@@ -111,8 +111,12 @@ fun Painting(
     val intrinsicSize = painter.intrinsicSize
     Box(
         modifier = modifier
-            .fillMaxWidth()
-            .height(512.dp)
+            .fillMaxWidth(
+                if (isTablet() && isScreenPortrait()) 0.7f
+                else if (isScreenPortrait()) 1f else 0.5f
+            )
+            .height(if (isTablet() && isScreenPortrait()) 640.dp else 528.dp),
+        contentAlignment = Alignment.Center
     ) {
         Image(
             painter = painter,
@@ -121,7 +125,7 @@ fun Painting(
                 .shadow(8.dp)
                 .background(color = Color.White)
                 .padding(24.dp)
-                .aspectRatio(intrinsicSize.width/ intrinsicSize.height)
+                .aspectRatio(intrinsicSize.width/intrinsicSize.height)
         )
     }
 }
@@ -136,7 +140,10 @@ fun PaintingDescription(
 ) {
     Column(
         modifier = modifier
-            .fillMaxWidth()
+            .fillMaxWidth(
+                if (isTablet() && isScreenPortrait()) 0.7f
+            else if (isScreenPortrait()) 1f else 0.5f
+            )
             .background(color = MaterialTheme.colorScheme.primaryContainer)
             .padding(16.dp)
     ) {
@@ -161,6 +168,17 @@ fun PaintingDescription(
         }
     }
 }
+
+@Composable
+fun isScreenPortrait(): Boolean {
+    val orientation = LocalConfiguration.current.orientation
+    return orientation == Configuration.ORIENTATION_PORTRAIT
+}
+
+@Composable
+fun isTablet(): Boolean {
+    val configuration = LocalConfiguration.current
+    return configuration.smallestScreenWidthDp >= 600}
 
 @Preview(showBackground = true)
 @Composable
