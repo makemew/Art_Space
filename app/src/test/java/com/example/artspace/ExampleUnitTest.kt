@@ -4,14 +4,23 @@ import org.junit.Test
 
 import org.junit.Assert.*
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
+class NavigationTest {
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun nextStepRight() {
+        val artworksListSize = 3
+        val currentStep = 2
+        val expectedStep = 0
+
+        val result = if (currentStep == artworksListSize-1) 0 else currentStep+1
+        assertEquals(result, expectedStep)
+    }
+    @Test
+    fun previousStepRight() {
+        val artworksListSize = 3
+        val currentStep = 0
+        val expectedStep = 2
+
+        val result = if (currentStep == 0) artworksListSize-1 else currentStep-1
+        assertEquals(result, expectedStep)
     }
 }
