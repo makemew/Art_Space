@@ -112,7 +112,7 @@ fun Painting(
     Box(
         modifier = modifier
             .fillMaxWidth(getContentWidth())
-            .height(if (isTablet() && isScreenPortrait()) 624.dp else 528.dp),
+            .height(if (isTablet() && isScreenPortrait()) 624.dp else 546.dp),
         contentAlignment = Alignment.Center
     ) {
         Image(
